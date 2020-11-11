@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetierBDD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,27 @@ namespace SupermarcheWPF
     /// </summary>
     public partial class FrmRayonsSecteurs : Window
     {
-        public FrmRayonsSecteurs()
+        GestionnaireBDD gstBdd;
+        public FrmRayonsSecteurs(GestionnaireBDD unGstBdd)
         {
             InitializeComponent();
+            gstBdd = unGstBdd;
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            //cboSecteurs.ItemsSource = gstBdd.GetAllSecteurs();
+            cboSecteurs.ItemsSource = gstBdd.GetAllNomsSecteurs();
+        }
+
+        private void cboSecteurs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(cboSecteurs.SelectedItem != null)
+            {
+                //Secteur s = gstBdd.GetSecteurByNom(cboSecteurs.SelectedItem as string);
+                lvRayons.ItemsSource = gstBdd.GetAllRayonsBySecteur(cboSecteurs.SelectedItem as string);
+            }
+        }
+
     }
 }

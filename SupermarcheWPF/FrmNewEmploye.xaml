@@ -5,8 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SupermarcheWPF"
         mc:Ignorable="d"
-        Title="FrmNewEmploye" Height="450" Width="800">
+        Title="FrmNewEmploye" Height="500" Width="600" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="New Employe" FontSize="50" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="10">
+                <Label Content="Numéro"></Label>
+                <TextBox IsEnabled="False"  x:Name="txtNumeroEmploye"></TextBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10">
+                <Label Content="Nom"></Label>
+                <TextBox x:Name="txtNomEmploye"></TextBox>
+            </StackPanel>
+
+            <Button Grid.Column="2" Name="btnAjouter" Click="btnAjouter_Click" Content="Ajouter" VerticalAlignment="Center" HorizontalAlignment="Center" Background="Coral"  Foreground="White" FontSize="20"></Button>
+        </Grid>
+
+        <ListBox Grid.Row="2" x:Name="lstEmployes">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="{Binding NumEmploye}" Width="100" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Text="{Binding PrenomEmploye}" Width="100" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

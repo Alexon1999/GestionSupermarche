@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetierBDD;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,11 @@ namespace SupermarcheWPF
     /// </summary>
     public partial class FrmGestionnaireHoraires : Window
     {
-        public FrmGestionnaireHoraires()
+        GestionnaireBDD gstBdd;
+        public FrmGestionnaireHoraires(GestionnaireBDD unGstBdd)
         {
             InitializeComponent();
+            gstBdd = unGstBdd;
         }
     }
 }
