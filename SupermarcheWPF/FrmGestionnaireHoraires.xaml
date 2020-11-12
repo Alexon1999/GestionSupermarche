@@ -5,8 +5,60 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SupermarcheWPF"
         mc:Ignorable="d"
-        Title="FrmGestionnaireHoraires" Height="450" Width="800">
+        Title="FrmGestionnaireHoraires" Height="500" Width="600" Loaded="Window_Loaded">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Gestion horaires" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"> </TextBlock>
+
+        <StackPanel Grid.Row="1" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Label Content="Liste des employés : " ></Label>
+                <ComboBox Name="cboEmployes" Width="200" SelectionChanged="cboEmployes_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel >
+                                <TextBlock Text="{Binding PrenomEmploye}"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Label Content="Liste des rayons : " ></Label>
+                <ComboBox Name="cboRayons" Width="200" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel >
+                                <TextBlock Text="{Binding NomRayon}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Label Content="Liste des rayons : " ></Label>
+                <Slider Name="sldTempPasse" ValueChanged="sldTempPasse_ValueChanged" TickFrequency="1" Minimum="0" Maximum="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"/>
+                <TextBlock Name="txtValSld" Width="20" ></TextBlock>            
+            </StackPanel>
+                   <!--Margin="left,top,rigt,bottom"-->
+            <Button Name="btnAjouter" Click="btnAjouter_Click" Content="Ajouter" Margin="5,10,5,10" FontSize="20"></Button>
+        </StackPanel>
+
+        <ListBox Grid.Row="2" Name="lstTravailsRayons">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding LeRayon.NomRayon}" Width="200" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock  Text="{Binding Date}" Width="200"></TextBlock>
+                        <TextBlock Text="{Binding TempTraville}"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

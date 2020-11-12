@@ -43,7 +43,8 @@ namespace SupermarcheWPF
                 lstEmployes.ItemsSource = null;
                 lstEmployes.ItemsSource = gstBdd.GetAllEmployes();
 
-                txtNumeroEmploye.Text = (Convert.ToInt16(txtNumeroEmploye.Text) + 1).ToString();
+                txtNumeroEmploye.Text = gstBdd.GetLastNumEmployes().ToString();
+                //txtNumeroEmploye.Text = (Convert.ToInt16(txtNumeroEmploye.Text) + 1).ToString();
                 txtNomEmploye.Text = "";
             }
             else

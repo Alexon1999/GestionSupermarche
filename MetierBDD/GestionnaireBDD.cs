@@ -72,6 +72,24 @@ namespace MetierBDD
             return unSecteur;
         }
 
+        public List<Rayon> GetAllRayons()
+        {
+            List<Rayon> lesRayons = new List<Rayon>();
+
+            cmd = new MySqlCommand("SELECT numR , nomR , numSecteur from rayon;", cnx);
+            dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Rayon r = new Rayon(Convert.ToInt16(dr[0]), dr[1].ToString(), Convert.ToInt16(dr[2]));
+                lesRayons.Add(r);
+            }
+
+            dr.Close();
+
+            return lesRayons;
+        }
+
         public List<Rayon> GetAllRayonsBySecteur(string unNomSecteur)
         {
             List<Rayon> lesRayons = new List<Rayon>();
@@ -108,10 +126,47 @@ namespace MetierBDD
             return lesEmployes;
         }
 
-        public void AjouterEmploye(int unNum , string unNomEmploye)
+        public List<String> GetAllPrenomsEmployes()
         {
-            cmd = new MySqlCommand("insert into employe values( " + unNum + "," + "'" + unNomEmploye + "'" + ");" , cnx);
-            cmd.ExecuteNonQuery();
+            List<String> lesEmployes = new List<String>();
+
+            cmd = new MySqlCommand("SELECT employe.prenomE from employe;", cnx);
+            dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                lesEmployes.Add(dr[0].ToString());
+            }
+
+            dr.Close();
+
+            return lesEmployes;
+        }
+
+        public List<Travailler> GetAllDetailsTravailDEmploye(int unNumEmploye)
+        {
+            List<Travailler> lesTravails = new List<Travailler>();
+
+            cmd = new MySqlCommand("SELECT t.codeE,r.numR,r.nomR,r.numSecteur,t.date,t.temps from travailler t INNER JOIN rayon r on t.codeR = r.numR where codeE = " + unNumEmploye, cnx);
+            dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                
+                Rayon r = new Rayon(Convert.ToInt16(dr[1]), dr[2].ToString(), Convert.ToInt16(dr[3]));
+
+                //    DateTime  : object
+                //Convert.ToDateTime()
+                // DateTime Object DateTime d =qqc    , d.ToShortDateString()
+
+                Travailler t = new Travailler(Convert.ToInt16(dr[0]), r, Convert.ToDateTime(dr[4].ToString()), Convert.ToInt16(dr[5]));
+
+                lesTravails.Add(t);
+            }
+
+            dr.Close();
+
+            return lesTravails;
         }
 
         public int GetLastNumEmployes()
@@ -127,6 +182,37 @@ namespace MetierBDD
 
             return lastNum;
             //return Convert.ToInt16(dr[0]) + 1;
+        }
+
+        public void AjouterEmploye(int unNum , string unNomEmploye)
+        {
+            cmd = new MySqlCommand("insert into employe values(" + unNum + "," + "'" + unNomEmploye + "'" + ");" , cnx);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void ajouterTravailler(Employe unEmploye , Rayon unRayon , string uneDate , int tempsDeTravails)
+        {
+            bool aTravailler = aDejaTravaillerPourUneDateParRayon(uneDate, unEmploye.NumEmploye , unRayon.NumRayon);
+
+            if (!aTravailler)
+            {
+                cmd = new MySqlCommand( "insert into travailler values(" + unEmploye.NumEmploye + "," + unRayon.NumRayon + "," + "'" + uneDate + "'" + "," + tempsDeTravails +  ");" , cnx);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public bool aDejaTravaillerPourUneDateParRayon(string uneDate , int numEmploye , int numRayon)
+        {
+            cmd = new MySqlCommand("SELECT * from travailler WHERE travailler.date = " + "'" + uneDate + "'"  + " AND " + "travailler.codeE = " + numEmploye + " AND " + "travailler.codeR = " + numRayon +  ";", cnx);
+            dr = cmd.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+                dr.Close();
+                return true;
+            }
+            dr.Close();
+            return false;
         }
 
     }
