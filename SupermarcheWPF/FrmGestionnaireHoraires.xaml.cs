@@ -65,16 +65,32 @@ namespace SupermarcheWPF
                     //lstTravailsRayons.SelectedItem as Travailler).Date.ToString("yyyy-MM-dd")  la date à string avec un format
                     //MessageBox.Show((lstTravailsRayons.SelectedItem as Travailler).Date.ToString("yyyy-MM-dd")); 2016-03-25
 
+                    // DateTime object
                     //DateTime test = new DateTime(2015, 01, 01);
-                    
+                    //test.ToString("yyyy-MM-dd");
 
-                    DateTime date = DateTime.Now; // Now propriété donne un objet de type Datetime avec la date d'aujourd'hui
-                    //MessageBox.Show(date.ToString("yyyy-MM-dd"));
+                    // Date aujourd'hui
+                    // DateTime date = DateTime.Now; // Now propriété donne un objet de type Datetime avec la date d'aujourd'hui
+                    //MessageBox.Show(date.ToString("yyyy-MM-dd")); // 2020-11-13
+                    // gstBdd.ajouterTravailler(selectedEmploye, selectedRayon, date.ToString("yyyy-MM-dd"), Convert.ToInt16(txtValSld.Text));
 
-                    gstBdd.ajouterTravailler(selectedEmploye, selectedRayon, date.ToString("yyyy-MM-dd"), Convert.ToInt16(txtValSld.Text));
+                    // Datepicker
+                    //MessageBox.Show(dpTravil.SelectedDate.ToString()); 25/03/2016 00:00:00
+                    //MessageBox.Show(dpTravil.SelectedDate.Value.ToString("yyyy-MM-dd")); // format
 
-                    lstTravailsRayons.ItemsSource = null;
-                    lstTravailsRayons.ItemsSource = gstBdd.GetAllDetailsTravailDEmploye((cboEmployes.SelectedItem as Employe).NumEmploye);
+
+                    // facultatif la datePicker
+                    if (dpTravil.SelectedDate.HasValue)
+                    {
+                        gstBdd.ajouterTravailler(selectedEmploye, selectedRayon, dpTravil.SelectedDate.Value.ToString("yyyy-MM-dd"), Convert.ToInt16(txtValSld.Text));
+                        lstTravailsRayons.ItemsSource = null;
+                        lstTravailsRayons.ItemsSource = gstBdd.GetAllDetailsTravailDEmploye((cboEmployes.SelectedItem as Employe).NumEmploye);
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Veuillez choisir une date", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {

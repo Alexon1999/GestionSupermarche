@@ -8,21 +8,21 @@
         Title="FrmGestionnaireHoraires" Height="500" Width="600" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Text="Gestion horaires" FontSize="35" HorizontalAlignment="Center" VerticalAlignment="Center"> </TextBlock>
 
-        <StackPanel Grid.Row="1" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Grid.Row="1"  HorizontalAlignment="Center">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Label Content="Liste des employés : " ></Label>
+                <Label Content="Liste des employés : " FontSize="15" ></Label>
                 <ComboBox Name="cboEmployes" Width="200" SelectionChanged="cboEmployes_SelectionChanged">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel >
-                                <TextBlock Text="{Binding PrenomEmploye}"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                            <StackPanel>
+                                <TextBlock Text="{Binding PrenomEmploye}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
@@ -45,6 +45,9 @@
                 <Slider Name="sldTempPasse" ValueChanged="sldTempPasse_ValueChanged" TickFrequency="1" Minimum="0" Maximum="10" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"/>
                 <TextBlock Name="txtValSld" Width="20" ></TextBlock>            
             </StackPanel>
+
+            <DatePicker Name="dpTravil"></DatePicker>
+            
                    <!--Margin="left,top,rigt,bottom"-->
             <Button Name="btnAjouter" Click="btnAjouter_Click" Content="Ajouter" Margin="5,10,5,10" FontSize="20"></Button>
         </StackPanel>
